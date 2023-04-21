@@ -5,12 +5,13 @@
     <title>House Price Predictor</title>
     <link
       rel="stylesheet"
-      href="index.css" />
+      href="inputs.css" />
     <link
       rel="stylesheet"
       href="navbar.css" />
   </head>
   <body>
+    <!-- navbar section begin -->
     <nav class="nav">
       <div class="container">
         <h1 class="logo"><a href="/index.html">House Price Predictor</a></h1>
@@ -28,7 +29,9 @@
         </ul>
       </div>
     </nav>
-    <h1>Find your dream house</h1>
+    <!-- navbar section end  -->
+
+    <!-- input feilds begin -->
     <form>
       <label for="type">What kind of house are you looking for?</label>
       <select
@@ -53,9 +56,30 @@
         id="budget"
         name="budget"
         placeholder="e.g. $200,000" />
+      <label for="location">Where do you want to live?</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        placeholder="e.g. San Francisco, CA" />
+      <label for="amenities">What amenities are important to you?</label>
+      <input type="checkbox" id="amenities" value="pool">Pool</input><br>
+      <input type="checkbox" id="amenities" value="gym" >Gym</input><br>
+      <input type="checkbox" id="amenities" value="fireplace">Fireplace</input ><br>
+      <input type="checkbox" id="amenities" value="yard">Yard</input ><br>
+      <input type="checkbox" id="amenities" value="garage">Garage</input><br>
       <input
         type="submit"
-        value="Find my dream house" />
+        value="Predict!" />
+        <br>
+
+        <div class="output">
+            <span>The Estimated Price of your House Is:</span><br>
+                <span>Rs. 10000</span>
+        </div>
     </form>
+    <!-- input feilds end -->
+    
+   
   </body>
 </html>
