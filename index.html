@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>House Finder</title>
+    <link
+      rel="stylesheet"
+      href="index.css" />
+  </head>
+  <body>
+    <h1>Find your dream house</h1>
+    <form>
+      <label for="type">What kind of house are you looking for?</label>
+      <select
+        id="type"
+        name="type">
+        <option value="apartment">Apartment</option>
+        <option value="house">House</option>
+        <option value="condo">Condo</option>
+        <option value="townhouse">Townhouse</option>
+      </select>
+      <label for="bedrooms">How many bedrooms do you need?</label>
+      <input
+        type="range"
+        value="3"
+        min="1"
+        max="10"
+        oninput="rangevalue.value=value" />
+      <output id="rangevalue">3</output>
+      <label for="budget">What is your budget?</label>
+      <input
+        type="text"
+        id="budget"
+        name="budget"
+        placeholder="e.g. $200,000" />
+      <input
+        type="submit"
+        value="Find my dream house" />
+    </form>
+  </body>
+</html>
