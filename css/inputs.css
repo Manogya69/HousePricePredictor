@@ -19,10 +19,16 @@ body {
 }
 
 .container {
-  text-align: center;
+  /* text-align: center; */
+  padding: 10%;
+  border: 2px black solid;
+  font-size: 25px;
+  align-items: center;
+  justify-content: center;
 }
 .progress-container {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   position: relative;
   margin-bottom: 30px;
