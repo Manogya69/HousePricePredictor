@@ -11,6 +11,9 @@
     <link
       rel="stylesheet"
       href="../css/navbar.css" />
+    <link
+      rel="stylesheet"
+      href="/css/form.css" />
     <title>Contact Us</title>
   </head>
   <body>
@@ -25,11 +28,56 @@
               >Home</a
             >
           </li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Service</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="/pages/about.html">About</a></li>
+          <li><a href="/pages/service.html">Service</a></li>
+          <li><a href="/pages/contact.html">Contact</a></li>
         </ul>
       </div>
     </nav>
+
+    <!-- form -->
+    <div
+      class="container"
+      id="form">
+      <h1>Contact Me through Mail</h1>
+      <form action="">
+        <div class="form-control">
+          <input
+            type="text"
+            required />
+          <label>Email</label>
+        </div>
+        <div class="form-control">
+          <input
+            type="text"
+            required />
+          <label>Name</label>
+        </div>
+        <div class="form-control">
+          <input
+            type="text"
+            required />
+          <label>Message</label>
+        </div>
+        <button class="btn">Send Message</button>
+        <!-- <p class="text">Don't have an Account? <a href="#">Register</a></p> -->
+      </form>
+    </div>
+    <!-- form end -->
+
+    <script>
+      // form wave
+      const labels = document.querySelectorAll(".form-control label");
+
+      labels.forEach((label) => {
+        label.innerHTML = label.innerText
+          .split("")
+          .map(
+            (letter, idx) =>
+              `<span style="transition-delay:${idx * 100}ms">${letter}</span>`
+          )
+          .join("");
+      });
+    </script>
   </body>
 </html>
