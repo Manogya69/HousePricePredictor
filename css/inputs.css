@@ -19,7 +19,7 @@ body {
 }
 
 #main {
-  text-align: center;
+  /* text-align: center; */
   padding: 10%;
   border: 2px black solid;
   font-size: 25px;
