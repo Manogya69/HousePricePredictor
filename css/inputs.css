@@ -18,8 +18,8 @@ body {
   overflow: hidden;
 }
 
-.container {
-  /* text-align: center; */
+#main {
+  text-align: center;
   padding: 10%;
   border: 2px black solid;
   font-size: 25px;
