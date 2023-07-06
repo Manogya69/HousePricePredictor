@@ -59,14 +59,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const typeInput = document.getElementById("type");
   typeInput.addEventListener("change", updatePredictedPrice);
 
-  //   const bedroomsInput = document.getElementById("bedrooms");
-  //   bedroomsInput.addEventListener("input", updatePredictedPrice);
+  const bedroomsInput = document.getElementById("bedrooms");
+  bedroomsInput.addEventListener("input", updatePredictedPrice);
 
-  //   const budgetInput = document.getElementById("budget");
-  //   budgetInput.addEventListener("input", updatePredictedPrice);
+  const budgetInput = document.getElementById("budget");
+  budgetInput.addEventListener("input", updatePredictedPrice);
 
-  //   const locationInput = document.getElementById("location");
-  //   locationInput.addEventListener("input", updatePredictedPrice);
+  const locationInput = document.getElementById("location");
+  locationInput.addEventListener("input", updatePredictedPrice);
 
   const amenitiesInputs = document.querySelectorAll("input[name='amenities']");
   amenitiesInputs.forEach(function (input) {
