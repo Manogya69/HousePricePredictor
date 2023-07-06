@@ -52,6 +52,8 @@ function updatePredictedPrice() {
 
   predictedPriceElement.textContent = "$" + predictedPrice.toLocaleString();
 }
+
+//DOMContentLoaded works after the content is loaded...
 document.addEventListener("DOMContentLoaded", function () {
   // Add event listeners to input elements
   const typeInput = document.getElementById("type");

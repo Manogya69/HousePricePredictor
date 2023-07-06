@@ -10,21 +10,20 @@
 
 body {
   font-family: "Muli", sans-serif;
-  background-color: #f6f7fb;
-  display: flex; /* centers everything */
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* viewport height, takes the entire height of the browser. */
+  height: 100vh;
   overflow: hidden;
 }
 
 #main {
-  /* text-align: center; */
-  padding: 10%;
+  padding: 5%;
   border: 2px black solid;
+  border-radius: 15px;
   font-size: 25px;
-  align-items: center;
-  justify-content: center;
+  height: auto;
+  width: 500px;
 }
 .progress-container {
   display: flex;
