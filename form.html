@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="css/inputs.css" />
+    <link
+      rel="stylesheet"
+      href="/css/navbar.css" />
+    <link
+      rel="stylesheet"
+      href="css/background.css" />
+
+    <title>House Price Predictor</title>
+  </head>
+  <body>
+    <!-- background animation -->
+    <div class="animateme">
+      <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <!-- <nav class="nav">
+      <div
+        class="container"
+        id="navbar">
+        <h1 class="logo"><a href="/index.html">House Price Predictor</a></h1>
+        <ul>
+          <li>
+            <a
+              href="../index.html"
+              class="current"
+              >Home</a
+            >
+          </li>
+          <li><a href="pages/about.html">About</a></li>
+          <li><a href="pages/service.html">Service</a></li>
+          <li><a href="pages/contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav> -->
+    <div
+      class="container"
+      id="main">
+      <div class="progress-container">
+        <div
+          class="progress"
+          id="progress"></div>
+        <div class="circle active">1</div>
+        <div class="circle">2</div>
+        <div class="circle">3</div>
+        <div class="circle">4</div>
+        <div class="circle">5</div>
+        <div class="circle">X</div>
+      </div>
+      <div class="content-container">
+        <!-- Content goes here -->
+      </div>
+
+      <button
+        class="btn"
+        id="prev">
+        Prev
+      </button>
+      <button
+        class="btn"
+        id="next">
+        Next
+      </button>
+      <div class="predicted-price-section">
+        <h2>Predicted Price:</h2>
+        <span id="predicted-price">$0</span>
+      </div>
+    </div>
+
+    <script>
+      //code for the progress bar Start
+      const progress = document.getElementById("progress");
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      const circles = document.querySelectorAll(".circle");
+
+      let currentActive = 1;
+      next.addEventListener("click", () => {
+        currentActive++;
+
+        if (currentActive > circles.length) {
+          currentActive = circles.length;
+        }
+        update();
+      });
+      prev.addEventListener("click", () => {
+        currentActive--;
+
+        if (currentActive < 1) {
+          currentActive = 1;
+        }
+        update();
+      });
+
+      function update() {
+        circles.forEach((circle, idx) => {
+          if (idx < currentActive) {
+            circle.classList.add("active");
+          } else {
+            circle.classList.remove("active");
+          }
+        });
+        const actives = document.querySelectorAll(".active");
+
+        progress.style.width =
+          ((actives.length - 1) / (circles.length - 1)) * 100 + "%";
+
+        // if (currentActive === 1) {
+        //   prev.disabled = true;
+        // } else if (currentActive === circles.length) {
+        //   next.disabled = true;
+        // } else {
+        //   prev.disabled = false;
+        //   next.disabled = false;
+        // }
+      }
+
+      //code for the progress bar End
+
+      // Get references to the buttons and the content container
+      const prevButton = document.getElementById("prev");
+      const nextButton = document.getElementById("next");
+      const contentContainer = document.querySelector(".content-container");
+
+      // Define an array of form sections
+      const formSections = [
+        `
+  <div>
+    <label for="type">What kind of house are you looking for?</label>
+    <select id="type" name="type">
+      <option value="apartment">Apartment</option>
+      <option value="house">House</option>
+      <option value="condo">Condo</option>
+      <option value="townhouse">Townhouse</option>
+    </select>
+  </div>
+  `,
+        `
+  <div>
+    <label for="bedrooms">How many bedrooms do you need?</label>
+    <input id="bedrooms" type="range" value="3" min="1" max="10" oninput="rangevalue.value=value" />
+    <output id="rangevalue">3</output>
+  </div>
+  `,
+        `
+  <div>
+    <label for="budget">What is your budget?</label>
+      <input
+        type="text"
+        id="budget"
+        name="budget"
+        placeholder="e.g. $200,000" />
+  </div>
+  `,
+        `
+  <div>
+    <label for="location">Where do you want to live?</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        placeholder="e.g. San Francisco, CA" />
+  </div>
+  `,
+        // id ma sab ma amenities xa tessaile problem aako huna sakxa!
+        `
+  <div>
+    
+    <label for="amenities">What amenities are important to you?</label><br>
+      <input type="checkbox" id="amenities" value="pool">Pool</input><br>
+      <input type="checkbox" id="amenities" value="gym" >Gym</input><br>
+      <input type="checkbox" id="amenities" value="fireplace">Fireplace</input ><br>
+      <input type="checkbox" id="amenities" value="yard">Yard</input ><br>
+      <input type="checkbox" id="amenities" value="garage">Garage</input><br>
+  </div>
+  `,
+        `<button type="submit" class="btn" id="submit">Submit And See Results</button>`,
+      ];
+
+      let currentSectionIndex = 0;
+
+      // Function to display the next section
+      function showNextSection() {
+        if (currentSectionIndex < formSections.length - 1) {
+          currentSectionIndex++;
+          updateContent();
+        }
+      }
+      // Function to display the previous section
+      function showPreviousSection() {
+        if (currentSectionIndex > 0) {
+          currentSectionIndex--;
+          updateContent();
+        }
+      }
+
+      // Function to update the content in the container
+      function updateContent() {
+        contentContainer.innerHTML = formSections[currentSectionIndex];
+
+        // Update the active circle in the progress steps
+        const circles = document.querySelectorAll(".circle");
+        circles.forEach((circle, index) => {
+          if (index === currentSectionIndex) {
+            circle.classList.add("active");
+          } else {
+            circle.classList.remove("active");
+          }
+        });
+
+        // Enable/disable the prev/next buttons based on the current index
+        prevButton.disabled = currentSectionIndex === 0;
+        nextButton.disabled = currentSectionIndex === formSections.length - 1;
+
+        // Hide the next button if it's the last section
+        nextButton.style.display =
+          currentSectionIndex === formSections.length - 1 ? "none" : "block";
+      }
+
+      // Initially update the content
+      updateContent();
+
+      // Add event listener to the next button
+      nextButton.addEventListener("click", showNextSection);
+      prevButton.addEventListener("click", showPreviousSection);
+    </script>
+    <script src="pricePredict.js"></script>
+  </body>
+</html>
