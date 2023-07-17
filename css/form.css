@@ -2,10 +2,11 @@
 :root {
   --line-border-fill: #3498db;
   --line-border-empty: #e0e0e0;
+  /* used for progressbar color  */
 }
 
 * {
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
 }
 
 body {
@@ -16,6 +17,18 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+/* box  */
+#main {
+  padding: 4%;
+  margin: 50px;
+  border: 2px black solid;
+  border-radius: 15px;
+  font-size: 25px;
+  height: 600px;
+  width: 500px;
+  position: relative;
+}
+/* progress bar  */
 .progress-container {
   display: flex;
   align-items: center;
@@ -63,38 +76,26 @@ body {
 .circle.active {
   border-color: var(--line-border-fill);
 }
-#main {
-  padding: 4%;
-  margin: 50px;
-  border: 2px black solid;
-  border-radius: 15px;
-  font-size: 25px;
-  height: 99vh;
-  width: 500px;
+/* predicted price  */
+.predicted-price-section {
+  margin: 100px 0;
+  position: absolute;
+  bottom: 0;
 }
-#type {
-  font-size: 20px;
-  padding: 5px;
-  margin-left: 100px;
-  border-radius: 10px;
-}
-.amenities-checkbox {
-  padding: 40px;
-  font-family: Arial;
-}
+
+/* buttons  */
 .btn {
   cursor: pointer;
-  display: inline-block;
-  width: 100%;
+  /* display: inline; */
   color: #fff;
-  background-color: #c0392b;
-  padding: 15px;
-  margin: 5px;
-  font-family: inherit;
-  font-size: 16px;
+  padding: 12px;
+  font-size: 20px;
   border: 0;
   border-radius: 5px;
   cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  width: 48%;
 }
 .btn:focus {
   outline: 0;
@@ -103,10 +104,30 @@ body {
   transform: scale(0.98);
 }
 #prev {
-  margin-bottom: 100px;
+  margin: 5px;
+  left: 0;
   background-color: rgb(23, 95, 23);
 }
 #next {
-  margin-top: 150px;
+  margin: 5px;
+  right: 0;
   background-color: rgb(24, 24, 201);
+}
+#submit {
+  margin: 5px;
+  right: 0;
+  background-color: #c0392b;
+}
+/* dropdown menu  */
+#type {
+  font-size: 20px;
+  padding: 5px;
+  margin-left: 100px;
+  border-radius: 10px;
+}
+
+/* checkbox  */
+.amenities-checkbox {
+  /* padding: 40px; */
+  font-family: Arial;
 }

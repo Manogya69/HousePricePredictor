@@ -75,20 +75,21 @@
       <div class="content-container">
         <!-- Content goes here -->
       </div>
-      <button
-        class="btn"
-        id="next">
-        Next
-      </button>
-      <button
-        class="btn"
-        id="prev">
-        Prev
-      </button>
-
+      <div class="btn-container">
+        <button
+          class="btn"
+          id="next">
+          Next
+        </button>
+        <button
+          class="btn"
+          id="prev">
+          Prev
+        </button>
+      </div>
       <div class="predicted-price-section">
         <h2>Predicted Price:</h2>
-        <span id="predicted-price">$0</span>
+        <span id="predicted-price">Rs 0</span>
       </div>
     </div>
 
@@ -178,19 +179,19 @@
         <label for="amenities" class="amenities-label">What amenities are important to you?</label>
 <div>
   <input type="checkbox" id="pool" class="amenities-checkbox" value="pool">
-  <label for="pool" class="amenities-checkbox">Pool</label> 
+  <label for="pool" class="amenities-checkbox">Pool</label> <br>
 
   <input type="checkbox" id="gym" class="amenities-checkbox" value="gym">
   <label for="gym" class="amenities-checkbox">Gym</label><br>
 
   <input type="checkbox" id="fireplace" class="amenities-checkbox" value="fireplace">
-  <label for="fireplace" class="amenities-checkbox">Fireplace</label>
+  <label for="fireplace" class="amenities-checkbox">Fireplace</label> <br>
 
   <input type="checkbox" id="yard" class="amenities-checkbox" value="yard">
   <label for="yard" class="amenities-checkbox">Yard</label><br>
 
   <input type="checkbox" id="garage" class="amenities-checkbox" value="garage">
-  <label for="garage" class="amenities-checkbox">Garage</label>
+  <label for="garage" class="amenities-checkbox">Garage</label> <br>
  
   <input type="checkbox" id="garage" class="amenities-checkbox" value="garage">
   <label for="garage" class="amenities-checkbox">Garage</label>
@@ -205,7 +206,7 @@
 
         //     <input type="checkbox" id="amenities" value="garage">Garage</input>
         // </div>,
-        `<button type="submit" class="btn" id="submit">Submit And See Results</button>`,
+        `<button type="submit" class="btn" id="submit">See Results</button>`,
       ];
 
       let currentSectionIndex = 0;
