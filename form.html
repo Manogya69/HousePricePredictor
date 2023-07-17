@@ -10,10 +10,10 @@
       content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="css/inputs.css" />
-    <link
+      href="css/form.css" />
+    <!-- <link
       rel="stylesheet"
-      href="/css/navbar.css" />
+      href="/css/navbar.css" /> -->
     <link
       rel="stylesheet"
       href="css/background.css" />
@@ -69,23 +69,23 @@
         <div class="circle">2</div>
         <div class="circle">3</div>
         <div class="circle">4</div>
-        <div class="circle">5</div>
+        <!-- <div class="circle">5</div> -->
         <div class="circle">X</div>
       </div>
       <div class="content-container">
         <!-- Content goes here -->
       </div>
-
-      <button
-        class="btn"
-        id="prev">
-        Prev
-      </button>
       <button
         class="btn"
         id="next">
         Next
       </button>
+      <button
+        class="btn"
+        id="prev">
+        Prev
+      </button>
+
       <div class="predicted-price-section">
         <h2>Predicted Price:</h2>
         <span id="predicted-price">$0</span>
@@ -129,15 +129,6 @@
 
         progress.style.width =
           ((actives.length - 1) / (circles.length - 1)) * 100 + "%";
-
-        // if (currentActive === 1) {
-        //   prev.disabled = true;
-        // } else if (currentActive === circles.length) {
-        //   next.disabled = true;
-        // } else {
-        //   prev.disabled = false;
-        //   next.disabled = false;
-        // }
       }
 
       //code for the progress bar End
@@ -151,54 +142,69 @@
       const formSections = [
         `
   <div>
-    <label for="type">What kind of house are you looking for?</label>
+    <label for="type">What kind of house are you looking for?</label><br>
     <select id="type" name="type">
+      <option value="trailer">Trailer</option>
       <option value="apartment">Apartment</option>
       <option value="house">House</option>
-      <option value="condo">Condo</option>
-      <option value="townhouse">Townhouse</option>
+      <option value="mansion">Mansion</option>
     </select>
   </div>
   `,
         `
   <div>
-    <label for="bedrooms">How many bedrooms do you need?</label>
-    <input id="bedrooms" type="range" value="3" min="1" max="10" oninput="rangevalue.value=value" />
-    <output id="rangevalue">3</output>
+    <label for="type">What kind of House do you want?</label><br>
+    <select id="type" name="type">
+      <option value="cheap">Cheap</option>
+      <option value="normal">Normal</option>
+      <option value="above-average">Above Average</option>
+      <option value="luxury">Luxury</option>
+    </select>
   </div>
   `,
         `
   <div>
-    <label for="budget">What is your budget?</label>
-      <input
-        type="text"
-        id="budget"
-        name="budget"
-        placeholder="e.g. $200,000" />
+    <label for="type">Where would you like your House to be?</label><br>
+    <select id="type" name="type">
+      <option value="cheap">Anywhere Cheap</option>
+      <option value="normal">Good Neighborhood</option>
+      <option value="above-average">Great View Location</option>
+      <option value="luxury">Rich Neighborhood</option>
+    </select>
   </div>
   `,
+
         `
-  <div>
-    <label for="location">Where do you want to live?</label>
-      <input
-        type="text"
-        id="location"
-        name="location"
-        placeholder="e.g. San Francisco, CA" />
-  </div>
-  `,
-        // id ma sab ma amenities xa tessaile problem aako huna sakxa!
-        `
-  <div>
-    
-    <label for="amenities">What amenities are important to you?</label><br>
-      <input type="checkbox" id="amenities" value="pool">Pool</input><br>
-      <input type="checkbox" id="amenities" value="gym" >Gym</input><br>
-      <input type="checkbox" id="amenities" value="fireplace">Fireplace</input ><br>
-      <input type="checkbox" id="amenities" value="yard">Yard</input ><br>
-      <input type="checkbox" id="amenities" value="garage">Garage</input><br>
-  </div>
-  `,
+        <label for="amenities" class="amenities-label">What amenities are important to you?</label>
+<div>
+  <input type="checkbox" id="pool" class="amenities-checkbox" value="pool">
+  <label for="pool" class="amenities-checkbox">Pool</label> 
+
+  <input type="checkbox" id="gym" class="amenities-checkbox" value="gym">
+  <label for="gym" class="amenities-checkbox">Gym</label><br>
+
+  <input type="checkbox" id="fireplace" class="amenities-checkbox" value="fireplace">
+  <label for="fireplace" class="amenities-checkbox">Fireplace</label>
+
+  <input type="checkbox" id="yard" class="amenities-checkbox" value="yard">
+  <label for="yard" class="amenities-checkbox">Yard</label><br>
+
+  <input type="checkbox" id="garage" class="amenities-checkbox" value="garage">
+  <label for="garage" class="amenities-checkbox">Garage</label>
+ 
+  <input type="checkbox" id="garage" class="amenities-checkbox" value="garage">
+  <label for="garage" class="amenities-checkbox">Garage</label>
+</div>
+ 
+  `, //   <label for="amenities">What amenities are important to you?</label><br> // <div>
+        //     <input type="checkbox" id="amenities" value="pool">Pool</input>
+        //     <input type="checkbox" id="amenities" value="gym" >Gym</input><br>
+
+        //     <input type="checkbox" id="amenities" value="fireplace">Fireplace</input >
+        //     <input type="checkbox" id="amenities" value="yard">Yard</input ><br>
+
+        //     <input type="checkbox" id="amenities" value="garage">Garage</input>
+        // </div>,
         `<button type="submit" class="btn" id="submit">Submit And See Results</button>`,
       ];
 
