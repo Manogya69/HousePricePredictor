@@ -166,12 +166,19 @@
         `
   <div>
     <label for="type">Where would you like your House to be?</label><br>
-    <select id="type" name="type">
-      <option value="cheap">Anywhere Cheap</option>
-      <option value="normal">Good Neighborhood</option>
-      <option value="above-average">Great View Location</option>
-      <option value="luxury">Rich Neighborhood</option>
-    </select>
+   
+      <input type="checkbox" id="cheap" class="amenities-checkbox" value="cheap">
+  <label for="cheap" class="amenities-checkbox">Anywhere Cheap</label> <br>
+
+  <input type="checkbox" id="normal" class="amenities-checkbox" value="normal">
+  <label for="goodNeighborhood" class="amenities-checkbox">Good Neighborhood</label><br>
+
+  <input type="checkbox" id="above-average" class="amenities-checkbox" value="above-average">
+  <label for="above-average" class="amenities-checkbox">Great View Location</label> <br>
+ 
+  <input type="checkbox" id="lucury" class="amenities-checkbox" value="luxury">
+  <label for="luxury" class="amenities-checkbox">Rich Neighborhood</label> <br>
+    
   </div>
   `,
 
@@ -197,15 +204,7 @@
   <label for="garage" class="amenities-checkbox">Garage</label>
 </div>
  
-  `, //   <label for="amenities">What amenities are important to you?</label><br> // <div>
-        //     <input type="checkbox" id="amenities" value="pool">Pool</input>
-        //     <input type="checkbox" id="amenities" value="gym" >Gym</input><br>
-
-        //     <input type="checkbox" id="amenities" value="fireplace">Fireplace</input >
-        //     <input type="checkbox" id="amenities" value="yard">Yard</input ><br>
-
-        //     <input type="checkbox" id="amenities" value="garage">Garage</input>
-        // </div>,
+  `,
         `<button type="submit" class="btn" id="submit">See Results</button>`,
       ];
 
