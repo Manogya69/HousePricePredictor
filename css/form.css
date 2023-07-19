@@ -119,7 +119,8 @@ body {
   background-color: #c0392b;
 }
 /* dropdown menu  */
-#type {
+#houseType,
+#priceType {
   font-size: 20px;
   padding: 5px;
   margin-left: 100px;

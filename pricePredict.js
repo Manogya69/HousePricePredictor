@@ -1,75 +1,124 @@
-//new
-
-// Define the price values for each entity
+// const priceValues = {
+//   houseType: {
+//     trailer: 50000,
+//     apartment: 100000,
+//     house: 200000,
+//     mansion: 500000,
+//   },
+//   priceType: {
+//     cheap: -20000,
+//     normal: 10000,
+//     "above-average": 30000,
+//     luxury: 50000,
+//   },
+//   location: {
+//     cheapNeighborhood: -10000,
+//     goodNeighborhood: 20000,
+//     greatView: 30000,
+//     richNeighborhood: 50000,
+//   },
+//   amenities: {
+//     pool: 10000,
+//     gym: 5000,
+//     fireplace: 2000,
+//     yard: 3000,
+//     garage: 5000,
+//   },
+// };
 const priceValues = {
-  apartment: 500000,
-  house: 800000,
-  condo: 600000,
-  townhouse: 700000,
-  bedrooms: 10000,
-  // Add more entities and their corresponding prices here
-  // ...
-  pool: 15000,
-  gym: 10000,
-  fireplace: 5000,
-  yard: 8000,
-  garage: 12000,
+  trailer: 10000,
+  apartment: 100000,
+  house: 500000,
+  mansion: 1000000,
+  cheap: 5000,
+  normal: 10000,
+  "above-average": 20000,
+  luxury: 50000,
+  cheapNeighborhood: -10000,
+  goodNeighborhood: 20000,
+  greatView: 30000,
+  richNeighborhood: 50000,
+  pool: 10000,
+  gym: 5000,
+  fireplace: 2000,
+  yard: 3000,
+  garage: 5000,
 };
 
-let predictedPrice = 0; // Initial predicted price
+let cumulativePrice = 0; // Initial cumulative predicted price
 const predictedPriceElement = document.getElementById("predicted-price");
 
 // Function to update the predicted price
 function updatePredictedPrice() {
-  predictedPrice = 0; // Reset the predicted price
-  const typeInput = document.getElementById("type");
-  const selectedType = typeInput.value;
-  predictedPrice += priceValues[selectedType] || 0;
+  let predictedPrice = 0; // Reset predicted price
 
-  const bedroomsInput = document.getElementById("bedrooms");
-  console.log(bedroomsInput);
-  const selectedBedrooms = parseInt(bedroomsInput.value);
-  predictedPrice += priceValues.bedrooms * selectedBedrooms;
+  const houseType = document.getElementById("houseType").value;
+  const priceType = document.getElementById("priceType").value;
+  const cheap = document.getElementById("cheap").checked;
+  const normal = document.getElementById("normal").checked;
+  const aboveAverage = document.getElementById("above-average").checked;
+  const luxury = document.getElementById("luxury").checked;
+  const pool = document.getElementById("pool").checked;
+  const gym = document.getElementById("gym").checked;
+  const fireplace = document.getElementById("fireplace").checked;
+  const yard = document.getElementById("yard").checked;
+  const garage = document.getElementById("garage").checked;
 
-  const budgetInput = document.getElementById("budget");
-  const budgetValue = budgetInput.value.trim();
-  const budgetAmount = parseFloat(budgetValue.replace(/[^\d.]/g, ""));
-  if (!isNaN(budgetAmount)) {
-    predictedPrice += budgetAmount;
+  if (houseType) {
+    predictedPrice += priceValues.houseType[houseType];
   }
-
-  const locationInput = document.getElementById("location");
-  const selectedLocation = locationInput.value.trim();
-  // Add any calculations based on location, if needed
-
-  const amenitiesInputs = document.querySelectorAll(
-    "input[name='amenities']:checked"
-  );
-  amenitiesInputs.forEach(function (input) {
-    const selectedAmenity = input.value;
-    predictedPrice += priceValues[selectedAmenity] || 0;
-  });
-
+  if (priceType) {
+    predictedPrice += priceValues.priceType[priceType];
+  }
+  if (cheap) {
+    predictedPrice += priceValues.location.cheap;
+  }
+  if (normal) {
+    predictedPrice += priceValues.location.goodNeighborhood;
+  }
+  if (aboveAverage) {
+    predictedPrice += priceValues.location.greatView;
+  }
+  if (luxury) {
+    predictedPrice += priceValues.location.richNeighborhood;
+  }
+  if (pool) {
+    predictedPrice += priceValues.amenities.pool;
+  }
+  if (gym) {
+    predictedPrice += priceValues.amenities.gym;
+  }
+  if (fireplace) {
+    predictedPrice += priceValues.amenities.fireplace;
+  }
+  if (yard) {
+    predictedPrice += priceValues.amenities.yard;
+  }
+  if (garage) {
+    predictedPrice += priceValues.amenities.garage;
+  }
+  cumulativePrice += predictedPrice;
   predictedPriceElement.textContent = "$" + predictedPrice.toLocaleString();
 }
 
-//DOMContentLoaded works after the content is loaded...
-document.addEventListener("DOMContentLoaded", function () {
-  // Add event listeners to input elements
-  const typeInput = document.getElementById("type");
-  typeInput.addEventListener("change", updatePredictedPrice);
+// Get references to the buttons and the content container
+const prevButtonSection = document.getElementById("prev");
+const nextButtonSection = document.getElementById("next");
+const ContentContainer = document.querySelector(".content-container");
 
-  const bedroomsInput = document.getElementById("bedrooms");
-  bedroomsInput.addEventListener("input", updatePredictedPrice);
+// Event delegation to handle dynamic sections
+ContentContainer.addEventListener("click", function (event) {
+  const target = event.target;
+  if (target.matches("#next")) {
+    updatePredictedPrice();
+  }
+});
 
-  const budgetInput = document.getElementById("budget");
-  budgetInput.addEventListener("input", updatePredictedPrice);
-
-  const locationInput = document.getElementById("location");
-  locationInput.addEventListener("input", updatePredictedPrice);
-
-  const amenitiesInputs = document.querySelectorAll("input[name='amenities']");
-  amenitiesInputs.forEach(function (input) {
-    input.addEventListener("change", updatePredictedPrice);
-  });
+// Event delegation to handle previous sections
+ContentContainer.addEventListener("click", function (event) {
+  const target = event.target;
+  if (target.matches("#prev")) {
+    predictedPrice = 0; // Reset predicted price when going to the previous section
+    predictedPriceElement.textContent = "$" + predictedPrice.toLocaleString();
+  }
 });
