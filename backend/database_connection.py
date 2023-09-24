@@ -3,8 +3,8 @@ import mysql.connector
 # Replace with your MySQL database connection details
 config = {
     "host": "localhost",
-    "user": "user",
-    "password": "user",
+    "user": "root",
+    "password": "",
     "database": "housepricepredictor",
 }
 
