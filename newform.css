@@ -1,0 +1,73 @@
+/* Center the container horizontally and vertically on the page */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Background color for the entire page */
+  }
+  
+  /* Apply styles to the container */
+  .container {
+    width: 400px; /* Adjust the width to your preference */
+    padding: 20px;
+    background-color: #f8f8f8; /* Background color for the form container */
+    border-radius: 10px; /* Rounded corners for the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for a subtle depth effect */
+  }
+
+/* Style the heading */
+h1 {
+  text-align: center;
+  color: #333; /* Text color */
+}
+
+/* Style form elements and groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Style labels */
+label {
+   display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Style dropdown menus */
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 5px;
+}
+
+/* Style checkboxes and checkbox labels */
+.amenities-checkboxes {
+  /* display: grid;
+  grid-template-columns: repeat(2, auto); */
+  grid-gap: 5px;
+
+}
+
+input[type="checkbox"], span {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3; /* Hover background color */
+}
