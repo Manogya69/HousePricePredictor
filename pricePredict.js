@@ -1,124 +1,50 @@
-// const priceValues = {
-//   houseType: {
-//     trailer: 50000,
-//     apartment: 100000,
-//     house: 200000,
-//     mansion: 500000,
-//   },
-//   priceType: {
-//     cheap: -20000,
-//     normal: 10000,
-//     "above-average": 30000,
-//     luxury: 50000,
-//   },
-//   location: {
-//     cheapNeighborhood: -10000,
-//     goodNeighborhood: 20000,
-//     greatView: 30000,
-//     richNeighborhood: 50000,
-//   },
-//   amenities: {
-//     pool: 10000,
-//     gym: 5000,
-//     fireplace: 2000,
-//     yard: 3000,
-//     garage: 5000,
-//   },
-// };
-const priceValues = {
-  trailer: 10000,
-  apartment: 100000,
-  house: 500000,
-  mansion: 1000000,
-  cheap: 5000,
-  normal: 10000,
-  "above-average": 20000,
-  luxury: 50000,
-  cheapNeighborhood: -10000,
-  goodNeighborhood: 20000,
-  greatView: 30000,
-  richNeighborhood: 50000,
-  pool: 10000,
-  gym: 5000,
-  fireplace: 2000,
-  yard: 3000,
-  garage: 5000,
-};
-
-let cumulativePrice = 0; // Initial cumulative predicted price
+// Get the form element by ID within the event handler
+const form = document.getElementById("housePriceForm");
+    
+// Get the predicted price element
 const predictedPriceElement = document.getElementById("predicted-price");
 
-// Function to update the predicted price
-function updatePredictedPrice() {
-  let predictedPrice = 0; // Reset predicted price
+// Function to retrieve form data
+function getFormData() {
+  const houseType = form.elements["houseType"].value;
+  const housePrice = form.elements["housePrice"].value;
+  const location = form.elements["location"].value;
 
-  const houseType = document.getElementById("houseType").value;
-  const priceType = document.getElementById("priceType").value;
-  const cheap = document.getElementById("cheap").checked;
-  const normal = document.getElementById("normal").checked;
-  const aboveAverage = document.getElementById("above-average").checked;
-  const luxury = document.getElementById("luxury").checked;
-  const pool = document.getElementById("pool").checked;
-  const gym = document.getElementById("gym").checked;
-  const fireplace = document.getElementById("fireplace").checked;
-  const yard = document.getElementById("yard").checked;
-  const garage = document.getElementById("garage").checked;
+  const amenitiesCheckboxes = document.querySelectorAll(".amenities-checkbox");
+  const amenities = Array.from(amenitiesCheckboxes)
+    .filter(checkbox => checkbox.checked)
+    .map(checkbox => checkbox.value);
 
-  if (houseType) {
-    predictedPrice += priceValues.houseType[houseType];
-  }
-  if (priceType) {
-    predictedPrice += priceValues.priceType[priceType];
-  }
-  if (cheap) {
-    predictedPrice += priceValues.location.cheap;
-  }
-  if (normal) {
-    predictedPrice += priceValues.location.goodNeighborhood;
-  }
-  if (aboveAverage) {
-    predictedPrice += priceValues.location.greatView;
-  }
-  if (luxury) {
-    predictedPrice += priceValues.location.richNeighborhood;
-  }
-  if (pool) {
-    predictedPrice += priceValues.amenities.pool;
-  }
-  if (gym) {
-    predictedPrice += priceValues.amenities.gym;
-  }
-  if (fireplace) {
-    predictedPrice += priceValues.amenities.fireplace;
-  }
-  if (yard) {
-    predictedPrice += priceValues.amenities.yard;
-  }
-  if (garage) {
-    predictedPrice += priceValues.amenities.garage;
-  }
-  cumulativePrice += predictedPrice;
-  predictedPriceElement.textContent = "$" + predictedPrice.toLocaleString();
+  return {
+    houseType,
+    housePrice,
+    location,
+    amenities,
+  };
 }
 
-// Get references to the buttons and the content container
-const prevButtonSection = document.getElementById("prev");
-const nextButtonSection = document.getElementById("next");
-const ContentContainer = document.querySelector(".content-container");
+// Function to calculate the predicted price based on form data
+function calculatePredictedPrice(formData) {
+  // Example: Calculate predicted price based on user inputs
+  let predictedPrice = 0;
 
-// Event delegation to handle dynamic sections
-ContentContainer.addEventListener("click", function (event) {
-  const target = event.target;
-  if (target.matches("#next")) {
-    updatePredictedPrice();
+  // Adjust the predicted price based on user inputs (e.g., house type, location, amenities)
+  if (formData.houseType === "apartment") {
+    predictedPrice += 100000; // Example price for an apartment
+  } else if (formData.houseType === "house") {
+    predictedPrice += 200000; // Example price for a house
+  } else if (formData.houseType === "mansion") {
+    predictedPrice += 500000; // Example price for a mansion
   }
-});
 
-// Event delegation to handle previous sections
-ContentContainer.addEventListener("click", function (event) {
-  const target = event.target;
-  if (target.matches("#prev")) {
-    predictedPrice = 0; // Reset predicted price when going to the previous section
-    predictedPriceElement.textContent = "$" + predictedPrice.toLocaleString();
-  }
-});
+  // Add more logic to adjust predicted price based on other inputs
+
+  return predictedPrice;
+}
+
+// Function to update the predicted price element
+function updatePredictedPrice(formData) {
+  const predictedPrice = calculatePredictedPrice(formData);
+  const predictedPriceElement = document.getElementById("predicted-price");
+  predictedPriceElement.textContent = `Predicted Price: Rs ${predictedPrice}`;
+}
