@@ -55,142 +55,76 @@
                     <input type="checkbox" id="garage" name="amenities" value="garage">
                     <span for="garage">Garage</span>
                 </div>
-            
-            <div class="form-group">
-                <button type="submit" id="submit">See Results</button>
-            </div>
-        </form>
-        <!-- <img src="https://i.redd.it/yghh0xgwxvx71.jpg" alt="" height="500px" width="500px"> -->
-        <!-- <img src="https://www.tutorialspoint.com/assets/questions/media/426142-1668760872.png" alt="" height="200px" width="200px"> -->
+    <div class="form-group">
+      <button type="submit" id="submit">See Results</button>
     </div>
     
-
-    <!-- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("housePriceForm"); // Replace "housePriceForm" with your form's actual ID
-
-  form.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the form from submitting and reloading the page
-
-    // Access form data using the form elements' "name" attributes
-    const houseType = form.elements["houseType"].value;
-    const housePrice = form.elements["housePrice"].value;
-    const location = form.elements["location"].value;
-
-    // Access selected amenities (checkboxes)
-    const amenitiesCheckboxes = form.elements["amenities"];
-    const selectedAmenities = Array.from(amenitiesCheckboxes)
-      .filter((checkbox) => checkbox.checked)
-      .map((checkbox) => checkbox.value);
-
-    // Display the retrieved data (you can modify this part as needed)
-    console.log("House Type:", houseType);
-    console.log("House Price:", housePrice);
-    console.log("Location:", location);
-    console.log("Selected Amenities:", selectedAmenities);
-
-   // Function to retrieve form data
-function getFormData() {
-    return {
-        houseType,
-        priceType,
-        location,
-        amenities,
-    };
-}
-
-// Function to send form data to Python backend
-function submitForm() {
-    const formData = getFormData();
-    console.log("formdata:", formData);
-
-    fetch('/api/house-predictor', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle the response data here
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-// Add an event listener to the form submit button
-// document.getElementById("submit").addEventListener("click", submitForm);
-
-  });
-});
-
-    </script> -->
+    <div class="predicted-price-section">
+      <h2>Predicted Price:</h2>
+      <span id="predicted-price">Rs 0</span>
+    </div>
+    <script src="pricePredict.js"></script>
     <script>
-
-        document.addEventListener("DOMContentLoaded", function () {
-  // Get the form element by ID within the event handler
-  const form = document.getElementById("housePriceForm");
-        
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get the form element by ID within the event handler
+        const form = document.getElementById("housePriceForm");
+    
+        // Get the predicted price element
+        const predictedPriceElement = document.getElementById("predicted-price");
+    
         // Function to retrieve form data
-function getFormData() {
-
-  const houseType = form.elements["houseType"].value;
-    const housePrice = form.elements["housePrice"].value;
-    const location = form.elements["location"].value;
-
-  const amenitiesCheckboxes = document.querySelectorAll(".amenities-checkbox");
-  const amenities = Array.from(amenitiesCheckboxes)
-    .filter(checkbox => checkbox.checked)
-    .map(checkbox => checkbox.value);
-
-  return {
-    houseType,
-    priceType,
-    location,
-    amenities,
-  };
-}
-
-// Function to send form data to Python backend
-function submitForm(event) {
-  event.preventDefault(); // Prevent the default form submission behavior
-
-  const formData = getFormData();
-
-  // Display the data being sent to the server in the console
-  console.log('Data being sent to server:', formData);
-
-  fetch('/api/house-predictor', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Handle the response data here (e.g., update UI with prediction results)
-    console.log(data);
-
-    // Example: Update a div element with the predicted price
-    const predictedPriceElement = document.getElementById("predicted-price");
-    predictedPriceElement.textContent = `Predicted Price: Rs ${data.predicted_price}`;
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-}
-
-// Add an event listener to the form submit button
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("housePriceForm");
-  form.addEventListener("submit", submitForm); // Attach the event listener to the form submit event
-});
-
-});
+        function getFormData() {
+          const houseType = form.elements["houseType"].value;
+          const housePrice = form.elements["housePrice"].value;
+          const location = form.elements["location"].value;
+    
+          const amenitiesCheckboxes = document.querySelectorAll(".amenities-checkbox");
+          const amenities = Array.from(amenitiesCheckboxes)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value);
+    
+          return {
+            houseType,
+            housePrice,
+            location,
+            amenities,
+          };
+        }
+    
+       
+        // Function to send form data to Python backend
+        function submitForm(event) {
+          event.preventDefault(); // Prevent the default form submission behavior
+    
+          const formData = getFormData();
+    
+          // Display the data being sent to the server in the console
+          console.log('Data being sent to server:', formData);
+    
+          // Calculate and update the predicted price
+          updatePredictedPrice(formData);
+    
+          // Send the form data to the server (you can keep your existing fetch code here)
+          fetch('/api/house-predictor', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Handle the response data here (e.g., update UI with prediction results)
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        }
+    
+        // Attach the event listener to the form submit button
+        form.addEventListener("submit", submitForm);
+      });
     </script>
 </body>
 </html>
