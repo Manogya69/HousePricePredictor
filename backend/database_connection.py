@@ -1,19 +1,32 @@
 import mysql.connector
 
-# Replace with your MySQL database connection details
-config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "database": "housepricepredictor",
-}
+def fetch_houses_data():
+    # Database connection parameters
+    db_config = {
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "housepricepredictor"
+    }
 
-try:
-    # Create a connection to the MySQL database
-    conn = mysql.connector.connect(**config)
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    if conn.is_connected():
-        print("Connected to MySQL database")
+        # Define an SQL query to retrieve data from the "houses" table
+        query = "SELECT * FROM houses"
+        cursor.execute(query)
 
-except mysql.connector.Error as e:
-    print(f"Error: {e}")
+        # Fetch all rows of the result set
+        houses_data = cursor.fetchall()
+
+        return houses_data
+
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL:", e)
+        return []
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
