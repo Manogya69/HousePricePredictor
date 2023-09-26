@@ -1,46 +1,57 @@
-// Get the form element by ID within the event handler
-const form = document.getElementById("housePriceForm");
-    
-// Get the predicted price element
-const predictedPriceElement = document.getElementById("predicted-price");
-
-// Function to retrieve form data
-function getFormData() {
-  const houseType = form.elements["houseType"].value;
-  const housePrice = form.elements["housePrice"].value;
-  const location = form.elements["location"].value;
-
-  const amenitiesCheckboxes = document.querySelectorAll(".amenities-checkbox");
-  const amenities = Array.from(amenitiesCheckboxes)
-    .filter(checkbox => checkbox.checked)
-    .map(checkbox => checkbox.value);
-
-  return {
-    houseType,
-    housePrice,
-    location,
-    amenities,
-  };
-}
-
-// Function to calculate the predicted price based on form data
 function calculatePredictedPrice(formData) {
-  // Example: Calculate predicted price based on user inputs
   let predictedPrice = 0;
 
-  // Adjust the predicted price based on user inputs (e.g., house type, location, amenities)
+  //Logic for Price Prediction
+  
+  // For House
   if (formData.houseType === "apartment") {
-    predictedPrice += 100000; // Example price for an apartment
+    predictedPrice += 50000; 
   } else if (formData.houseType === "house") {
-    predictedPrice += 200000; // Example price for a house
+    predictedPrice += 250000; 
   } else if (formData.houseType === "mansion") {
-    predictedPrice += 500000; // Example price for a mansion
+    predictedPrice += 500000; 
+  }
+   // For house price range
+   if (formData.housePrice === "cheap") {
+    predictedPrice -= 20000; // Extra discount for a cheap house
+  } else if (formData.housePrice === "normal") {
+    predictedPrice += 0; // No additional cost for normal house.
+  }  else if (formData.housePrice === "above-average") {
+    predictedPrice += 50000; // Extra cost  for an above-average house
+  } else if (formData.housePrice === "luxury") {
+    predictedPrice += 100000; // Extra cost for a luxury house
   }
 
-  // Add more logic to adjust predicted price based on other inputs
+  // For Location
+  if (formData.location === "cheapNeighborhood") {
+    predictedPrice -= 25000; // discount for cheap neighborhood
+  } else if (formData.location === "greatViewLocation") {
+    predictedPrice += 50000; // premium for a great view location
+  } else if (formData.location === "richNeighborhood") {
+    predictedPrice += 100000; // premium for a rich neighborhood
+  }
+
+  // For amenities
+  const selectedAmenities = formData.amenities || []; // Default to an empty array if amenities is undefined
+  if (selectedAmenities.includes("pool")) {
+    predictedPrice += 15000; // Example price increase for a pool
+  }
+  if (selectedAmenities.includes("gym")) {
+    predictedPrice += 10000; // Example price increase for a gym
+  }
+  if (selectedAmenities.includes("fireplace")) {
+    predictedPrice += 8000; // Example price increase for a fireplace
+  }
+  if (selectedAmenities.includes("yard")) {
+    predictedPrice += 12000; // Example price increase for a yard
+  }
+  if (selectedAmenities.includes("garage")) {
+    predictedPrice += 10000; // Example price increase for a garage
+  }
 
   return predictedPrice;
 }
+
 
 // Function to update the predicted price element
 function updatePredictedPrice(formData) {
