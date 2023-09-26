@@ -111,24 +111,15 @@ checkboxes.forEach((checkbox) => {
     
         //   // Send the form data to the server
           fetch('http://localhost:8080', {
+            mode: 'no-cors',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
           })
-          .then(response => response.json())
-          .then(data => {
-            // Handle the response data here (e.g., update UI with prediction results)
-            console.log(data);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-
-
-        }
-    
+   }
+      
         // Attach the event listener to the form submit button
         form.addEventListener("submit", submitForm);
       });
