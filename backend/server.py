@@ -1,6 +1,7 @@
 import http.server
 import socketserver
 import json
+from database_connection import fetch_houses_data  # Import the fetch_houses_data function from your database_connection module
 
 # Define the port where the server will listen
 PORT = 8080
@@ -15,34 +16,21 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
 
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-
-        # Parse the JSON data received from the client
-        try:
-            data = json.loads(post_data.decode('utf-8'))
-            print("Received data:")
-            print(data)
-            
-            # Modify the response_data to include both the message and the received data
-            response_data = {
-                "message": "Data received by the server",
-                "received_data": data  # Include the received data
-            }
-
-            # Set the HTTP status code and send the response data as JSON
+    def do_GET(self):  # Change from POST to GET for fetching data
+        if self.path == '/get_houses':
+            # Set the CORS headers for GET requests
             self.send_response(200)
-            self.send_header('Content-type', 'application/json')
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', 'http://localhost:5500')  # Replace with your frontend URL
             self.end_headers()
-            self.wfile.write(json.dumps(response_data).encode('utf-8'))
-        except json.JSONDecodeError as e:
-            # Handle JSON parsing errors
-            self.send_response(400)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            error_response = {"error": "Invalid JSON data"}
-            self.wfile.write(json.dumps(error_response).encode('utf-8'))
+
+            # Fetch data from the database using the fetch_houses_data function
+            houses_data = fetch_houses_data()  # Use the imported function to fetch data from the database
+
+            # Convert data to JSON and send it as a response
+            self.wfile.write(json.dumps(houses_data).encode())
+        else:
+            return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 # Start the server
 with socketserver.TCPServer(("", PORT), MyRequestHandler) as httpd:
