@@ -30,3 +30,35 @@ def fetch_houses_data():
         if connection.is_connected():
             cursor.close()
             connection.close()
+
+            
+def fetch_house_images_data():
+    # Database connection parameters
+    db_config = {
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "housepricepredictor"
+    }
+
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
+
+        # Define an SQL query to retrieve data from the "house_images" table
+        query = "SELECT * FROM house_images"
+        cursor.execute(query)
+
+        # Fetch all rows of the result set
+        house_images_data = cursor.fetchall()
+
+        return house_images_data
+
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL:", e)
+        return []
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
