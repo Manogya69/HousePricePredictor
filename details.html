@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>House Details</title>
+    <!-- <link rel="stylesheet" href="styles.css">  -->
+</head>
+<body>
+    <h1>House Details</h1>
+    <div id="house-details"></div>
+    <script src="details.js"></script> <!-- Include your JavaScript file -->
+
+
+<script>
+    // Function to extract query parameters from the URL
+function getQueryParams() {
+    const queryParams = new URLSearchParams(window.location.search);
+    return Object.fromEntries(queryParams.entries());
+}
+
+// Function to fetch and display house details
+function displayHouseDetails() {
+    const queryParams = getQueryParams();
+    const houseId = queryParams.house_id;
+
+    // Find the house with the matching house_id in houseData
+    const house = houseData.find(h => h.house_id === houseId);
+
+    if (house) {
+        const houseDetailsContainer = document.getElementById('house-details');
+        houseDetailsContainer.innerHTML = '';
+
+        // Display house details on the page
+        for (const key in house) {
+            const detailItem = document.createElement('p');
+            detailItem.innerHTML = `<strong>${key}:</strong> ${house[key]}`;
+            houseDetailsContainer.appendChild(detailItem);
+        }
+    } else {
+        console.error('House not found');
+    }
+}
+
+// Call the displayHouseDetails function when the page loads
+window.addEventListener('load', displayHouseDetails);
+
+</script>
+</body>
+</html>
