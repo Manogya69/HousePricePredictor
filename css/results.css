@@ -1,0 +1,64 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for house cards */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #fff;
+}
+
+/* Styles for house cards */
+.house-card {
+    height: 300px;
+    width:200px; /* Adjust the width as needed */
+    border: 1px solid #ddd;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.house-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Sections within the card */
+.house-type {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.house-image {
+    flex-grow: 2; /* Takes up more vertical space */
+    text-align: center;
+    padding: 10px;
+}
+
+.house-name {
+    padding: 10px;
+    font-size: 1.2rem;
+}
+
+.house-price {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
