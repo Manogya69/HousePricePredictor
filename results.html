@@ -2,51 +2,112 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>House Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Houses</title>
+    <style>
+        /* Add CSS styling for the cards as needed */
+        .card {
+            width: 200px;
+            height: 300px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .house-type {
+            background-color: #f1c40f; /* Example color for house type */
+            padding: 10px;
+            text-align: center;
+        }
+        .house-image {
+            max-height: 100px;
+            max-width: 100%;
+            padding: 10px;
+        }
+        .house-name {
+            padding: 10px;
+            text-align: center;
+        }
+        .house-price {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>House Results</h1>
-    <div id="house-results"></div>
+    <div id="houseContainer"></div>
+
     <script>
-        // Function to make an AJAX request and display data
-        function fetchData() {
-            fetch('http://localhost:8080/get_houses') // This URL matches the API endpoint in server.py
+        // Define a variable to store the fetched house data
+        let housesData = [];
+
+        // Function to create a card for each house
+function createHouseCard(house) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // First section: House type with background color
+    const houseType = document.createElement('div');
+    houseType.className = 'house-type';
+    houseType.textContent = house.house_type;
+    card.appendChild(houseType);
+
+    // Second section: Exterior image of the house
+    const houseImage = document.createElement('img');
+    houseImage.className = 'house-image';
+    
+    // Check if the images array exists and has at least one element
+    if (house.images && house.images.length > 0) {
+        houseImage.src = house.images[0]; // Assuming the first image URL is used as the exterior image
+    } else {
+        // Provide a default image URL or handle the case when there are no images
+        houseImage.src = 'default-image.jpg'; // Replace with your default image URL
+    }
+    
+    card.appendChild(houseImage);
+
+    // Third section: Name of the house
+    const houseName = document.createElement('div');
+    houseName.className = 'house-name';
+    houseName.textContent = house.house_name;
+    card.appendChild(houseName);
+
+    // Fourth section: Price of the house
+    const housePrice = document.createElement('div');
+    housePrice.className = 'house-price';
+    housePrice.textContent = `$${house.house_price}`;
+    card.appendChild(housePrice);
+
+    // Add an event listener to redirect to details.html when the card is clicked
+    card.addEventListener('click', () => {
+        // Redirect to details.html with the selected house ID as a query parameter
+        window.location.href = `details.html?house_id=${house.house_id}`;
+    });
+
+    return card;
+}
+
+        // Function to fetch house data from the server
+        function fetchHousesData() {
+            fetch('http://localhost:8080/get_houses')
                 .then(response => response.json())
                 .then(data => {
-                    const houseResults = document.getElementById('house-results');
-                    houseResults.innerHTML = ''; // Clear previous results
-    
-                    // Create a table to display the data
-                    const table = document.createElement('table');
-                    const headerRow = table.insertRow(0);
-    
-                    // Add table headers
-                    for (const key in data[0]) {
-                        const th = document.createElement('th');
-                        th.textContent = key;
-                        headerRow.appendChild(th);
-                    }
-    
-                    // Add table rows with data
-                    data.forEach(house => {
-                        const row = table.insertRow();
-                        for (const key in house) {
-                            const cell = row.insertCell();
-                            cell.textContent = house[key];
-                        }
+                    housesData = data;
+                    const houseContainer = document.getElementById('houseContainer');
+
+                    // Create a card for each house and append it to the container
+                    housesData.forEach(house => {
+                        const card = createHouseCard(house);
+                        houseContainer.appendChild(card);
                     });
-    
-                    houseResults.appendChild(table);
                 })
                 .catch(error => {
-                    console.error('Error fetching data:', error);
+                    console.error('Error:', error);
                 });
         }
-    
-        // Call the fetchData function when the page loads
-        window.addEventListener('load', fetchData);
+
+        // Call the fetchHousesData function to load the data
+        fetchHousesData();
     </script>
 </body>
 </html>
-
-
