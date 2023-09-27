@@ -1,12 +1,11 @@
 # import http.server
 # import json
 # from database_connection import fetch_houses_data, fetch_house_images_data
-# # from server import user_preference
+
 # # Define global variables to store the retrieved data
 # houses_data = []
 # house_images_data = []
 
-# # print(user_preference)
 # # Fetch and store data from the database when the server starts
 # houses_data = fetch_houses_data()
 # house_images_data = fetch_house_images_data()
