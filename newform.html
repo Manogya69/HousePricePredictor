@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>House Price Predictor</h1>
-        <form id="housePriceForm">
+        <form id="housePriceForm" action="http://localhost:8080" method="post">
             <div class="form-group">
                 <label for="houseType">What Type of House do you want?</label>
                 <select id="houseType" name="houseType">
@@ -38,91 +38,89 @@
                 </select>
             </div>
             
-                <label>Select Amenities:</label>
-                <div class="amenities-checkboxes">
-                    <input type="checkbox" id="pool" name="amenities" value="pool">
-                    <span for="pool">Pool</span>
-                    <br>
-                    <input type="checkbox" id="gym" name="amenities" value="gym">
-                    <span for="gym">Gym</span>
-                    <br>
-                    <input type="checkbox" id="fireplace" name="amenities" value="fireplace">
-                    <span for="fireplace">Fireplace</span>
-                    <br>
-                    <input type="checkbox" id="yard" name="amenities" value="yard">
-                    <span for="yard">Yard</span>
-                    <br>
-                    <input type="checkbox" id="garage" name="amenities" value="garage">
-                    <span for="garage">Garage</span>
-                </div>
-    <div class="form-group">
-      <button type="submit" id="submit">See Results</button>
+            <label>Select Amenities:</label>
+            <div class="amenities-checkboxes">
+                <input type="checkbox" id="pool" name="amenities" value="pool">
+                <span for="pool">Pool</span>  <!-- label thiyo span ma change gareko css le effect gareko le -->
+                <br>
+                <input type="checkbox" id="gym" name="amenities" value="gym">
+                <span for="gym">Gym</span>
+                <br>
+                <input type="checkbox" id="fireplace" name="amenities" value="fireplace">
+                <span for="fireplace">Fireplace</span>
+                <br>
+                <input type="checkbox" id="yard" name="amenities" value="yard">
+                <span for="yard">Yard</span>
+                <br>
+                <input type="checkbox" id="garage" name="amenities" value="garage">
+                <span for="garage">Garage</span>
+            </div>
+            <div class="form-group">
+                <button type="submit" id="submit">See Results</button>
+            </div>
+        </form>
     </div>
     
-    <div class="predicted-price-section">
-      <h2>Predicted Price:</h2>
-      <span id="predicted-price">Rs 0</span>
-    </div>
-    <script src="pricePredict.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Get the form element by ID within the event handler
-        const form = document.getElementById("housePriceForm");
-    
-        // Get the predicted price element
-        const predictedPriceElement = document.getElementById("predicted-price");
-    
-        // Function to retrieve form data
-        function getFormData() {
-          const houseType = form.elements["houseType"].value;
-          const housePrice = form.elements["housePrice"].value;
-          const location = form.elements["location"].value;
+        document.addEventListener("DOMContentLoaded", function () {
           
-          
-const amenitiesContainer = document.querySelector(".amenities-checkboxes");
-const checkboxes = amenitiesContainer.querySelectorAll("input[type='checkbox']");
-const selectedAmenities = [];
-checkboxes.forEach((checkbox) => {
-  if (checkbox.checked) {
-    selectedAmenities.push(checkbox.value);
-  }
+            // Get the form element by ID within the event handler
+            const form = document.getElementById("housePriceForm");
+            // Function to retrieve form data
+            function getFormData() {
+                const houseType = form.elements["houseType"].value;
+                const housePrice = form.elements["housePrice"].value;
+                const location = form.elements["location"].value;
+                
+                const amenitiesContainer = document.querySelector(".amenities-checkboxes");
+                const checkboxes = amenitiesContainer.querySelectorAll("input[type='checkbox']");
+                const selectedAmenities = [];
+                checkboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        selectedAmenities.push(checkbox.value);
+                    }
+                });
+    
+                return {
+                    houseType,
+                    housePrice,
+                    location,
+                    selectedAmenities,
+                };
+            }
+    
+            // Function to send form data to Python backend and redirect to results.html
+            function submitForm(event) {
+                event.preventDefault(); // Prevent the default form submission behavior
+    
+                const formData = getFormData();
+    
+                // Display the data being sent to the server in the console
+                console.log('Data being sent to server:', formData);
+    
+                // Send the form data to the server
+fetch('http://localhost:8080', {
+    method: 'POST',
+    mode: 'no-cors', //no-cors halepaxi chai Access to fetch wala error aayena and server le data received pani dekhayo
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+})
+.then(() => {
+    // After sending the data, construct the URL with query parameters and redirect to results.html
+    const queryParams = new URLSearchParams(formData).toString();
+    const redirectURL = `results.html?${queryParams}`;
+    window.location.href = redirectURL;
+})
+.catch(error => {
+    console.error('Error:', error);
 });
+            }
     
-          return {
-            houseType,
-            housePrice,
-            location,
-            selectedAmenities,
-          };
-        }
-     
-       
-        // Function to send form data to Python backend
-        function submitForm(event) {
-          event.preventDefault(); // Prevent the default form submission behavior
-    
-          const formData = getFormData();
-    
-          // Display the data being sent to the server in the console
-          console.log('Data being sent to server:', formData);
-    
-         // Calculate and update the predicted price from pricePredict.js
-     updatePredictedPrice(formData);
-    
-        //   // Send the form data to the server
-          fetch('http://localhost:8080', {
-            mode: 'no-cors',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-          })
-   }
-      
-        // Attach the event listener to the form submit button
-        form.addEventListener("submit", submitForm);
-      });
+            // Attach the event listener to the form submit button
+            form.addEventListener("submit", submitForm);
+        });
     </script>
 </body>
 </html>
