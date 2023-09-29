@@ -1,7 +1,7 @@
 import http.server
 import json
 from database_connection import unique_house_list
-from database_connection import image_data
+from database_connection import house_images_data
 
 # Global variable to store user preferences
 user_preferences = {}
@@ -87,13 +87,17 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 
            # Create a JSON response containing the top 5 house IDs
         top_5_house_ids = [house["house_id"] for house in top_5_houses]
-        # response_data = {"top_5_houses": top_5_house_ids}
+
         response_data = {
         "user_preference": user_preferences,
         "top_5_houses": top_5_house_ids,
         "unique_house_list": unique_house_list,
-        "house_images_data": image_data
+        "house_images_data": house_images_data
     }
+        # Print the response_data to the console
+        print("Response data:")
+        print(response_data)
+
 
         # Set CORS headers to allow requests from http://localhost:5500
         self.send_response(200)
