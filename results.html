@@ -3,77 +3,13 @@
 <head>
     <title>Results Page</title>
     <script src="pricePredict.js"></script>
-
-    <style>
-        /* Style for the top 5 houses */
-#top5Houses {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.house-panel {
-    display: flex;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-}
-
-.left-side {
-    flex: 1;
-    padding: 10px;
-}
-
-.left-side img {
-    max-width: 100%;
-    height: auto;
-}
-
-.right-side {
-    flex: 2;
-    padding: 10px;
-}
-
-.house-panel h3 {
-    font-size: 1.2rem;
-    margin: 0;
-}
-
-.house-panel p {
-    margin: 5px 0;
-}
-
-/* Style for the rest of the houses */
-#restOfHousesContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.card {
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin: 10px;
-    width: calc(30% - 20px);
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.card img {
-    max-width: 100%;
-    height: auto;
-}
-
-.card h2 {
-    font-size: 1.2rem;
-    margin: 10px 0;
-}
-
-    </style>
+    <link rel="stylesheet" href="css/results.css">
 </head>
 <body>
      <!-- Display form data -->
-     <h2>Form Data:</h2>
+    
 <div id="formData">
+    <h3>Input provided by the User:</h3>
     <p><strong>House Type:</strong> <span id="houseTypeValue"></span></p>
     <p><strong>House Price:</strong> <span id="housePriceValue"></span></p>
     <p><strong>Location:</strong> <span id="locationValue"></span></p>
@@ -96,6 +32,7 @@
     </div>
 
     <!-- Display the rest of the house list -->
+    <h2>Available Houses</h2>
 <div id="restOfHousesContainer" class="rest-of-houses-container">
     <!-- The dynamic house cards will be inserted here -->
 </div>
