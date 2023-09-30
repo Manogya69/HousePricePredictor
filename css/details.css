@@ -16,6 +16,7 @@
 
 /* Style for House Details Section */
 .house-details {
+    border-radius: 10px; /* Add border radius to the entire content */
     background-color: #f5f5f5;
     padding: 20px;
     border: 1px solid #ccc;
@@ -25,6 +26,7 @@
   
   .house-details img {
     max-width: 100%;
+    /* width: 500px; */
     height: auto;
   }
   
@@ -40,6 +42,9 @@
   
   /* Style for Image Container */
 #imageContainer {
+    background-color: #ded9d9;
+    border-radius: 10px; /* Add border radius to the entire content */
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

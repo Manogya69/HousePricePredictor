@@ -16,6 +16,7 @@
   
 /* Style for Form Data section */
 #formData {
+    border-radius: 10px; /* Add border radius to the entire content */
     background-color: #f5f5f5;
     padding: 20px;
     border: 1px solid #ccc;
@@ -32,6 +33,7 @@
   
   /* Style for Predicted Price section */
   .predicted-price-section {
+    border-radius: 10px; /* Add border radius to the entire content */
     background-color: #3498db;
     color: #fff;
     padding: 20px;
@@ -45,12 +47,14 @@
   
   /* Style for Top 5 Houses section */
   #top5Houses {
+    border-radius: 10px; /* Add border radius to the entire content */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
   
   .house-panel {
+    border-radius: 10px; /* Add border radius to the entire content */
     width: calc(20% - 20px); /* Adjust the width based on your layout */
     margin-bottom: 20px;
     border: 1px solid #ccc;
@@ -89,6 +93,7 @@
   }
   
   .card {
+    border-radius: 10px; /* Add border radius to the entire content */
     width: calc(30% - 20px); /* Adjust the width based on your layout */
     margin-bottom: 20px;
     border: 1px solid #ccc;
