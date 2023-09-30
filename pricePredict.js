@@ -1,38 +1,38 @@
-function calculatePredictedPrice(formData) {
+function calculatePredictedPrice(user_preferences) {
   let predictedPrice = 0;
 
   //Logic for Price Prediction
   
   // For House
-  if (formData.houseType === "apartment") {
+  if (user_preferences.houseType === "apartment") {
     predictedPrice += 50000; 
-  } else if (formData.houseType === "house") {
+  } else if (user_preferences.houseType === "house") {
     predictedPrice += 250000; 
-  } else if (formData.houseType === "mansion") {
+  } else if (user_preferences.houseType === "mansion") {
     predictedPrice += 500000; 
   }
    // For house price range
-   if (formData.housePrice === "cheap") {
+   if (user_preferences.housePrice === "cheap") {
     predictedPrice -= 20000; // Extra discount for a cheap house
-  } else if (formData.housePrice === "normal") {
+  } else if (user_preferences.housePrice === "normal") {
     predictedPrice += 0; // No additional cost for normal house.
-  }  else if (formData.housePrice === "above-average") {
+  }  else if (user_preferences.housePrice === "above-average") {
     predictedPrice += 50000; // Extra cost  for an above-average house
-  } else if (formData.housePrice === "luxury") {
+  } else if (user_preferences.housePrice === "luxury") {
     predictedPrice += 100000; // Extra cost for a luxury house
   }
 
   // For Location
-  if (formData.location === "cheapNeighborhood") {
+  if (user_preferences.location === "cheapNeighborhood") {
     predictedPrice -= 25000; // discount for cheap neighborhood
-  } else if (formData.location === "greatViewLocation") {
+  } else if (user_preferences.location === "greatViewLocation") {
     predictedPrice += 50000; // premium for a great view location
-  } else if (formData.location === "richNeighborhood") {
+  } else if (user_preferences.location === "richNeighborhood") {
     predictedPrice += 100000; // premium for a rich neighborhood
   }
 
   // For amenities
-  const selectedAmenities = formData.amenities || []; // Default to an empty array if amenities is undefined
+  const selectedAmenities = user_preferences.amenities || []; // Default to an empty array if amenities is undefined
   if (selectedAmenities.includes("pool")) {
     predictedPrice += 15000; // Example price increase for a pool
   }
@@ -52,10 +52,12 @@ function calculatePredictedPrice(formData) {
   return predictedPrice;
 }
 
-
-// Function to update the predicted price element
-function updatePredictedPrice(formData) {
-  const predictedPrice = calculatePredictedPrice(formData);
+// Define a function to update the predicted price in the HTML
+function updatePredictedPrice(userPreferences) {
+  const predictedPrice = calculatePredictedPrice(userPreferences);
   const predictedPriceElement = document.getElementById("predicted-price");
-  predictedPriceElement.textContent = `Predicted Price: Rs ${predictedPrice}`;
+
+  if (predictedPriceElement) {
+      predictedPriceElement.textContent = `Predicted Price: Rs ${predictedPrice}`;
+  }
 }
