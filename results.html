@@ -13,11 +13,24 @@
 }
 
 .house-panel {
+    display: flex;
     border: 1px solid #ccc;
-    padding: 20px;
-    margin: 10px;
-    width: calc(20% - 20px);
-    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.left-side {
+    flex: 1;
+    padding: 10px;
+}
+
+.left-side img {
+    max-width: 100%;
+    height: auto;
+}
+
+.right-side {
+    flex: 2;
+    padding: 10px;
 }
 
 .house-panel h3 {
@@ -73,13 +86,12 @@
         <span id="predicted-price">Rs 0</span>
       </div>
       
-    <h1>Top 5 Houses</h1>
-    <ul id="houseList"></ul>
+
 
 
     <!-- Display top 5 houses -->
     <h2>Top 5 Houses</h2>
-    <div id="top5Houses">
+    <div id="top5Houses" class="house-container">
         <!-- Display top 5 houses here -->
     </div>
 
@@ -90,6 +102,8 @@
 
 
     <script>
+
+  
         let houseType, housePrice, locationValue, selectedAmenities;
         let houseImagesData, top5Houses, uniqueHouseList;
 
@@ -153,15 +167,27 @@ for (const house of uniqueHouseList) {
             console.log('Unique House List:', uniqueHouseList);
             ;
 
+            // Store the uniqueHouseList data in localStorage
+    localStorage.setItem('uniqueHouseList', JSON.stringify(uniqueHouseList));
+    // Store the houseImagesData data in localStorage
+    localStorage.setItem('houseImagesData', JSON.stringify(houseImagesData));
+
         // Display user preferences in the "Form Data" section
     if (data.user_preference) {
         document.getElementById('houseTypeValue').textContent = houseType;
         document.getElementById('housePriceValue').textContent = data.user_preference.housePrice;
         document.getElementById('locationValue').textContent = data.user_preference.location;
-        document.getElementById('selectedAmenitiesValue').textContent = data.user_preference.selectedAmenities.join(', '); // Assuming selectedAmenities is an array
+
+        if (Array.isArray(data.user_preference.selectedAmenities)) {
+        document.getElementById('selectedAmenitiesValue').textContent = data.user_preference.selectedAmenities.join(', ');
+    } else {
+        // Handle the case where selectedAmenities is not an array (e.g., display a default value or an error message)
+        document.getElementById('selectedAmenitiesValue').textContent = 'Amenities not available';
+    }
+        // document.getElementById('selectedAmenitiesValue').textContent = data.user_preference.selectedAmenities.join(', ');
     }
 
-                // Display top 5 houses
+// Display top 5 houses
 const top5HousesDiv = document.getElementById('top5Houses');
 data.top_5_houses.forEach(houseId => {
     // Create a panel for each top house
@@ -172,7 +198,24 @@ data.top_5_houses.forEach(houseId => {
     const houseData = data.unique_house_list.find(house => house.house_id === houseId);
     
     if (houseData) {
-        // Create elements to display house information
+        // Find the corresponding image URL in houseImagesData
+        const houseImageInfo = houseImagesData.find(imageInfo => imageInfo.house_id === houseData.house_id);
+        // Create a div for the left side (image) and right side (details)
+        const leftSide = document.createElement('div');
+        leftSide.classList.add('left-side');
+
+        const rightSide = document.createElement('div');
+        rightSide.classList.add('right-side');
+
+        // Create an image element for the exterior image
+        const houseImage = document.createElement('img');
+        if (houseImageInfo) {
+            houseImage.src = houseImageInfo.image_url;
+        } else {
+            // Provide a default image or a placeholder image URL if needed
+            // houseImage.src = 'path/to/default-image.jpg';
+        }
+        // Create elements to display house information (same as before)
         const houseName = document.createElement('h3');
         houseName.textContent = houseData.house_name;
 
@@ -188,17 +231,39 @@ data.top_5_houses.forEach(houseId => {
         const amenities = document.createElement('p');
         amenities.textContent = `Amenities: ${houseData.has_pool ? 'Pool, ' : ''}${houseData.has_gym ? 'Gym, ' : ''}${houseData.has_fireplace ? 'Fireplace, ' : ''}${houseData.has_yard ? 'Yard, ' : ''}${houseData.has_garage ? 'Garage' : ''}`;
         
-        // Append the elements to the housePanel
-        housePanel.appendChild(houseName);
-        housePanel.appendChild(houseType);
-        housePanel.appendChild(priceRange);
-        housePanel.appendChild(location);
-        housePanel.appendChild(amenities);
+        // Append the elements to the left and right sides
+        leftSide.appendChild(houseImage);
+        rightSide.appendChild(houseName);
+        rightSide.appendChild(houseType);
+        rightSide.appendChild(priceRange);
+        rightSide.appendChild(location);
+        rightSide.appendChild(amenities);
+
+        // Append the left and right sides to the housePanel
+        housePanel.appendChild(leftSide);
+        housePanel.appendChild(rightSide);
 
         // Append the housePanel to the top5HousesDiv
         top5HousesDiv.appendChild(housePanel);
     }
 });
+
+                  // Add a click event listener to each house panel or card
+                  const housePanels = document.querySelectorAll('.house-panel');
+
+housePanels.forEach((housePanel, index) => {
+    housePanel.addEventListener('click', () => {
+                // Extract the house ID or unique identifier from your data
+                const houseId = uniqueHouseList[index].house_id;
+
+                // Redirect to details.html with the house ID as a query parameter
+                window.location.href = `details.html?houseId=${houseId}`;
+    });
+});
+
+
+
+
 
                // Get the container element where you want to display the houses
 const restOfHousesContainer = document.getElementById('restOfHousesContainer'); 
@@ -227,9 +292,25 @@ for (const house of uniqueHouseList) {
 
     // Append the card to the container
     restOfHousesContainer.appendChild(card);
+
+    // Add a click event listener to each card
+    card.addEventListener('click', () => {
+        // Extract the house ID or unique identifier from your data
+        const houseId = house.house_id;
+
+        // Redirect to details.html with the house ID as a query parameter
+        window.location.href = `details.html?houseId=${houseId}`;
+});
 }
+
             })
+
+            
             .catch(error => console.error('Error:', error));
+            
+
+
+          
     </script>
 </body>
 </html>
