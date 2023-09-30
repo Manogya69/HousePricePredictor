@@ -7,7 +7,13 @@
 <body>
      <!-- Display form data -->
      <h2>Form Data:</h2>
-     <div id="formData"></div>
+<div id="formData">
+    <p><strong>House Type:</strong> <span id="houseTypeValue"></span></p>
+    <p><strong>House Price:</strong> <span id="housePriceValue"></span></p>
+    <p><strong>Location:</strong> <span id="locationValue"></span></p>
+    <p><strong>Selected Amenities:</strong> <span id="selectedAmenitiesValue"></span></p>
+</div>
+
 
     <div class="predicted-price-section">
         <h2>Predicted Price:</h2>
@@ -17,7 +23,6 @@
     <h1>Top 5 Houses</h1>
     <ul id="houseList"></ul>
 
-   <!-- <img src="https://i.pinimg.com/564x/81/c1/87/81c18773eed133f81cb036e2f144eae7.jpg" alt="" height="500px" width="500px"> -->
 
     <!-- Display top 5 houses -->
     <h2>Top 5 Houses</h2>
@@ -26,7 +31,6 @@
     </div>
 
     <!-- Display the rest of the house list -->
-    <!-- Add this HTML code to create a container for the "rest of the houses" -->
 <div id="restOfHousesContainer" class="rest-of-houses-container">
     <!-- The dynamic house cards will be inserted here -->
 </div>
@@ -43,13 +47,17 @@
         return response.json();
     })
             .then(data => {
-                console.log('Received data:', data); // Add this line
-                if (data.user_preferences) {
-                houseType = data.user_preferences.houseType;
-                housePrice = data.user_preferences.housePrice;
-                locationValue = data.user_preferences.location; // Updated variable name
-                selectedAmenities = data.user_preferences.selectedAmenities;
+                console.log('Received data:', data);
+                if (data.user_preference) {
+                houseType = data.user_preference.houseType;
+                housePrice = data.user_preference.housePrice;
+                locationValue = data.user_preference.location;
+                selectedAmenities = data.user_preference.selectedAmenities;
+                // Call the updatePredictedPrice function with userPreferences data
+    
             }
+            updatePredictedPrice(data.user_preference);
+            
 
             if (data.house_images_data) {
                 houseImagesData = data.house_images_data;
@@ -92,6 +100,14 @@ for (const house of uniqueHouseList) {
             console.log('Unique House List:', uniqueHouseList);
             ;
 
+        // Display user preferences in the "Form Data" section
+    if (data.user_preference) {
+        document.getElementById('houseTypeValue').textContent = houseType;
+        document.getElementById('housePriceValue').textContent = data.user_preference.housePrice;
+        document.getElementById('locationValue').textContent = data.user_preference.location;
+        document.getElementById('selectedAmenitiesValue').textContent = data.user_preference.selectedAmenities.join(', '); // Assuming selectedAmenities is an array
+    }
+
                 // Display top 5 houses
 const top5HousesDiv = document.getElementById('top5Houses');
 data.top_5_houses.forEach(houseId => {
@@ -132,7 +148,7 @@ data.top_5_houses.forEach(houseId => {
 });
 
                // Get the container element where you want to display the houses
-const restOfHousesContainer = document.getElementById('restOfHousesContainer'); // Replace with the actual container ID or selector
+const restOfHousesContainer = document.getElementById('restOfHousesContainer'); 
 
 // Loop through the uniqueHouseList
 for (const house of uniqueHouseList) {
