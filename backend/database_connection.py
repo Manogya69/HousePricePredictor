@@ -118,7 +118,7 @@ def fetch_house_images():
 
 # Example usage:
 house_images_data = fetch_house_images()
-
+print(house_images_data)
 
 # Fetch data from the database and create a unique house list
 unique_house_list = create_unique_house_list(fetch_data_from_database())
