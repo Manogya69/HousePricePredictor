@@ -1,0 +1,61 @@
+/* Font Styles for details.html */
+.details-body {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .details-h2 {
+    font-family: "Cursive", cursive;
+    font-size: 24px;
+  }
+  
+  .details-p {
+    font-family: "Verdana", sans-serif;
+    font-size: 16px;
+  }
+  
+
+/* Style for House Details Section */
+.house-details {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .house-details img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .house-details h2 {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+  
+  .house-details p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  
+  /* Style for Image Container */
+#imageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #imageContainer img {
+    width: 400px; 
+    height: 300px; 
+    margin: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  #imageContainer img:hover {
+    transform: scale(1.1);
+  }
