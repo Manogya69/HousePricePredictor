@@ -45,12 +45,12 @@ def filter_houses_by_preferences(user_preferences, houses, min_score_threshold=0
 filtered_houses = filter_houses_by_preferences(user_preferences, unique_house_list, min_score_threshold=3)
 
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
-    # def do_OPTIONS(self):
-    #     self.send_response(200)
-    #     self.send_header('Access-Control-Allow-Origin', 'http://localhost:5500')  # Replace with your front-end URL
-    #     self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    #     self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-    #     self.end_headers()
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', 'http://localhost:5501')  # Replace with your front-end URL
+        self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
         
     def do_POST(self):
         global user_preferences  # Use the global variable
@@ -94,15 +94,11 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
         "unique_house_list": unique_house_list,
         "house_images_data": house_images_data
     }
-        # Print the response_data to the console
-        print("Response data:")
-        print(response_data)
-
-
-        # Set CORS headers to allow requests from http://localhost:5500
+        
+         # Set CORS headers to allow requests from http://localhost:5500
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', 'http://localhost:5500')
+        self.send_header('Access-Control-Allow-Origin', 'http://127.0.0.1:5501')
         self.end_headers()
         self.wfile.write(json.dumps(response_data).encode('utf-8'))
 
