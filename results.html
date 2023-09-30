@@ -3,6 +3,59 @@
 <head>
     <title>Results Page</title>
     <script src="pricePredict.js"></script>
+
+    <style>
+        /* Style for the top 5 houses */
+#top5Houses {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.house-panel {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    width: calc(20% - 20px);
+    box-sizing: border-box;
+}
+
+.house-panel h3 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.house-panel p {
+    margin: 5px 0;
+}
+
+/* Style for the rest of the houses */
+#restOfHousesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    width: calc(30% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+    </style>
 </head>
 <body>
      <!-- Display form data -->
