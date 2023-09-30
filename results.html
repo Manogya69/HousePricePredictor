@@ -1,113 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Houses</title>
-    <style>
-        /* Add CSS styling for the cards as needed */
-        .card {
-            width: 200px;
-            height: 300px;
-            border: 1px solid #ccc;
-            margin: 10px;
-            display: inline-block;
-            cursor: pointer;
-        }
-        .house-type {
-            background-color: #f1c40f; /* Example color for house type */
-            padding: 10px;
-            text-align: center;
-        }
-        .house-image {
-            max-height: 100px;
-            max-width: 100%;
-            padding: 10px;
-        }
-        .house-name {
-            padding: 10px;
-            text-align: center;
-        }
-        .house-price {
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
+    <title>Results Page</title>
+    <script src="pricePredict.js"></script>
 </head>
 <body>
-    <div id="houseContainer"></div>
+     <!-- Display form data -->
+     <h2>Form Data:</h2>
+     <div id="formData"></div>
+
+    <div class="predicted-price-section">
+        <h2>Predicted Price:</h2>
+        <span id="predicted-price">Rs 0</span>
+      </div>
+      
+    <h1>Top 5 Houses</h1>
+    <ul id="houseList"></ul>
+
+   <!-- <img src="https://i.pinimg.com/564x/81/c1/87/81c18773eed133f81cb036e2f144eae7.jpg" alt="" height="500px" width="500px"> -->
+
+    <!-- Display top 5 houses -->
+    <h2>Top 5 Houses</h2>
+    <div id="top5Houses">
+        <!-- Display top 5 houses here -->
+    </div>
+
+    <!-- Display the rest of the house list -->
+    <!-- Add this HTML code to create a container for the "rest of the houses" -->
+<div id="restOfHousesContainer" class="rest-of-houses-container">
+    <!-- The dynamic house cards will be inserted here -->
+</div>
+
 
     <script>
-        // Define a variable to store the fetched house data
-        let housesData = [];
+        let houseType, housePrice, locationValue, selectedAmenities;
+        let houseImagesData, top5Houses, uniqueHouseList;
 
-        // Function to create a card for each house
-function createHouseCard(house) {
-    const card = document.createElement('div');
-    card.className = 'card';
+        // Fetch the JSON data from the server
+        fetch('http://localhost:8080', { method: 'GET', })
+        .then(response => {
+        console.log('Received response');
+        return response.json();
+    })
+            .then(data => {
+                console.log('Received data:', data); // Add this line
+                if (data.user_preferences) {
+                houseType = data.user_preferences.houseType;
+                housePrice = data.user_preferences.housePrice;
+                locationValue = data.user_preferences.location; // Updated variable name
+                selectedAmenities = data.user_preferences.selectedAmenities;
+            }
 
-    // First section: House type with background color
-    const houseType = document.createElement('div');
-    houseType.className = 'house-type';
-    houseType.textContent = house.house_type;
-    card.appendChild(houseType);
+            if (data.house_images_data) {
+                houseImagesData = data.house_images_data;
+            }
 
-    // Second section: Exterior image of the house
-    const houseImage = document.createElement('img');
-    houseImage.className = 'house-image';
-    
-    // Check if the images array exists and has at least one element
-    if (house.images && house.images.length > 0) {
-        houseImage.src = house.images[0]; // Assuming the first image URL is used as the exterior image
-    } else {
-        // Provide a default image URL or handle the case when there are no images
-        houseImage.src = 'default-image.jpg'; // Replace with your default image URL
+            if (data.top_5_houses) {
+                top5Houses = data.top_5_houses;
+            }
+
+            if (data.unique_house_list) {
+                uniqueHouseList = data.unique_house_list;
+            }
+            const houseImagesMap = {};
+
+// Populate the houseImagesMap using houseImagesData
+for (const image of houseImagesData) {
+    const houseId = image.house_id;
+    if (!houseImagesMap[houseId]) {
+        houseImagesMap[houseId] = [];
     }
-    
-    card.appendChild(houseImage);
-
-    // Third section: Name of the house
-    const houseName = document.createElement('div');
-    houseName.className = 'house-name';
-    houseName.textContent = house.house_name;
-    card.appendChild(houseName);
-
-    // Fourth section: Price of the house
-    const housePrice = document.createElement('div');
-    housePrice.className = 'house-price';
-    housePrice.textContent = `$${house.house_price}`;
-    card.appendChild(housePrice);
-
-    // Add an event listener to redirect to details.html when the card is clicked
-    card.addEventListener('click', () => {
-        // Redirect to details.html with the selected house ID as a query parameter
-        window.location.href = `details.html?house_id=${house.house_id}`;
-    });
-
-    return card;
+    houseImagesMap[houseId].push(image);
 }
 
-        // Function to fetch house data from the server
-        function fetchHousesData() {
-            fetch('http://localhost:8080/get_houses')
-                .then(response => response.json())
-                .then(data => {
-                    housesData = data;
-                    const houseContainer = document.getElementById('houseContainer');
+// Step 2: Update uniqueHouseList with associated images
+for (const house of uniqueHouseList) {
+    const houseId = house.house_id;
+    if (houseImagesMap[houseId]) {
+        house.images = houseImagesMap[houseId];
+    }
+}
 
-                    // Create a card for each house and append it to the container
-                    housesData.forEach(house => {
-                        const card = createHouseCard(house);
-                        houseContainer.appendChild(card);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
+            //Console log form data
+            console.log('House Type:', houseType);
+            console.log('House Price:', housePrice);
+            console.log('Location:', locationValue);
+            console.log('Selected Amenities:', selectedAmenities);
+            //Console log house image data, top 5 houses, and all houses
+            console.log('House Images Data:', houseImagesData);
+            console.log('Top 5 Houses:', top5Houses);
+            console.log('Unique House List:', uniqueHouseList);
+            ;
 
-        // Call the fetchHousesData function to load the data
-        fetchHousesData();
+                // Display top 5 houses
+const top5HousesDiv = document.getElementById('top5Houses');
+data.top_5_houses.forEach(houseId => {
+    // Create a panel for each top house
+    const housePanel = document.createElement('div');
+    housePanel.classList.add('house-panel');
+    
+    // Find the house data in unique_house_list based on houseId
+    const houseData = data.unique_house_list.find(house => house.house_id === houseId);
+    
+    if (houseData) {
+        // Create elements to display house information
+        const houseName = document.createElement('h3');
+        houseName.textContent = houseData.house_name;
+
+        const houseType = document.createElement('p');
+        houseType.textContent = `House Type: ${houseData.house_type}`;
+
+        const priceRange = document.createElement('p');
+        priceRange.textContent = `Price Range: ${houseData.price_range}`;
+
+        const location = document.createElement('p');
+        location.textContent = `Location: ${houseData.location}`;
+
+        const amenities = document.createElement('p');
+        amenities.textContent = `Amenities: ${houseData.has_pool ? 'Pool, ' : ''}${houseData.has_gym ? 'Gym, ' : ''}${houseData.has_fireplace ? 'Fireplace, ' : ''}${houseData.has_yard ? 'Yard, ' : ''}${houseData.has_garage ? 'Garage' : ''}`;
+        
+        // Append the elements to the housePanel
+        housePanel.appendChild(houseName);
+        housePanel.appendChild(houseType);
+        housePanel.appendChild(priceRange);
+        housePanel.appendChild(location);
+        housePanel.appendChild(amenities);
+
+        // Append the housePanel to the top5HousesDiv
+        top5HousesDiv.appendChild(housePanel);
+    }
+});
+
+               // Get the container element where you want to display the houses
+const restOfHousesContainer = document.getElementById('restOfHousesContainer'); // Replace with the actual container ID or selector
+
+// Loop through the uniqueHouseList
+for (const house of uniqueHouseList) {
+    // Create a card element for each house
+    const card = document.createElement('div');
+    card.classList.add('card'); // You can add CSS classes for styling
+
+    // Create an image element for the house's exterior image (assuming you have an "images" property)
+    if (house.images && house.images.length > 0) {
+        const image = document.createElement('img');
+        image.src = house.images[0].image_url; // Assuming the first image is the exterior image
+        image.alt = house.house_name; // Set alt text for accessibility
+        card.appendChild(image);
+    }
+
+    // Create a title element for the house's name
+    const title = document.createElement('h2');
+    title.textContent = house.house_name;
+    card.appendChild(title);
+
+    // Create other elements to display additional information (house type, location, etc.)
+    // You can customize this part based on your data structure
+
+    // Append the card to the container
+    restOfHousesContainer.appendChild(card);
+}
+            })
+            .catch(error => console.error('Error:', error));
     </script>
 </body>
 </html>
